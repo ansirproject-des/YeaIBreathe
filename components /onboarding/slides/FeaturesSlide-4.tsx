@@ -62,7 +62,7 @@ export function FeaturesSlide() {
             ease: "easeInOut",
           }}
 
-          className="flex py-3 text-xs text-text-descr px-4 mt-6 bg-app-gray border border-app-gray-hover rounded-xl">
+          className="flex py-3 text-sm text-text-descr px-4 mt-6 bg-app-gray border border-app-gray-hover rounded-xl">
           *Privacy comes first. Share only what feels right. Everything else stays yours until you decide otherwise.</motion.div>
       </div>
     </div>

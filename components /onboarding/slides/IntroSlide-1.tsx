@@ -11,7 +11,6 @@ export function IntroSlide() {
       <div className="relative w-full h-50 overflow-hidden">
         <div className="absolute inset-0 flex items-center justify-center">
 
-  {/* Left */}
   <motion.div
     initial={{
       opacity: 0,
@@ -38,7 +37,7 @@ export function IntroSlide() {
     <IntroCard src={Feet} />
   </motion.div>
 
-  {/* Middle */}
+
   <motion.div
   animate={{
     opacity: 1,
@@ -58,7 +57,7 @@ export function IntroSlide() {
   <IntroCard src={Drop} />
 </motion.div>
 
-  {/* Right */}
+
   <motion.div
     initial={{
       opacity: 0,

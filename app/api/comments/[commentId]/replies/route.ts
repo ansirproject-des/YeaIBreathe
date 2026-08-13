@@ -4,7 +4,6 @@ import { NextResponse } from "next/server";
 
 type RouteProps = {
   params: Promise<{
-    postId: string,
     commentId: string,
   }>;
 };
@@ -20,7 +19,7 @@ export async function GET(
       throw new Error("Unauthorized");
     }
 
-    const { postId, commentId } = await params;
+    const { commentId } = await params;
 
     const replies = await getReplies(commentId);
 
