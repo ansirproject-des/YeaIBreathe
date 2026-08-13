@@ -24,10 +24,10 @@ export async function GET() {
           include: {
             attachments: true,
             user: {
-          include: {
-            followers: true,
-          }
-        },
+              include: {
+                followers: true,
+              }
+            },
             likes: true,
             postBookmarks: true,
             _count: {
@@ -42,10 +42,15 @@ export async function GET() {
         comment: {
           include: {
             user: {
-          include: {
-            followers: true,
-          }
-        },
+              include: {
+                followers: true,
+              }
+            },
+            post: {
+              select: {
+                userId: true,
+              },
+            },
             attachments: true,
             postBookmarks: true,
             likes: true,
@@ -75,7 +80,11 @@ export async function GET() {
       if (bookmark.comment && !bookmark.comment.isDeleted) {
         return {
           type: "comment" as const,
-          data: mapComment(bookmark.comment, user.id),
+          data: mapComment(
+            bookmark.comment,
+            user.id,
+            bookmark.comment.post.userId
+          ),
           savedAt: bookmark.createdAt.toISOString(),
         };
       }

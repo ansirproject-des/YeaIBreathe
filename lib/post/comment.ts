@@ -46,6 +46,11 @@ export async function getComments(postId: string) {
             followers: true,
           }
         },
+        post: {
+          select: {
+            userId: true,
+          },
+        },
         attachments: true,
         likes: true,
         postBookmarks: true,
@@ -107,6 +112,11 @@ export async function getReplies(commentId: string) {
           include: {
             followers: true,
           }
+        },
+        post: {
+          select: {
+            userId: true,
+          },
         },
         attachments: true,
         likes: true,
@@ -197,11 +207,11 @@ export async function getCommentAncestors(
       id: commentId,
     },
     include: {
-    post: {
-      select: {
-        userId: true,
+      post: {
+        select: {
+          userId: true,
+        },
       },
-    },
       user: {
         include: {
           followers: true,
@@ -223,6 +233,11 @@ export async function getCommentAncestors(
               followers: true,
             }
           },
+          post: {
+            select: {
+              userId: true,
+            },
+          },
           attachments: true,
           likes: true,
           postBookmarks: true,
@@ -243,8 +258,8 @@ export async function getCommentAncestors(
 
   const ancestors = await getCommentAncestors(comment.parent.id);
 
- return [
-  ...ancestors,
-  mapComment(comment.parent, user.id, comment.post.userId),
-];
+  return [
+    ...ancestors,
+    mapComment(comment.parent, user.id, comment.post.userId),
+  ];
 }

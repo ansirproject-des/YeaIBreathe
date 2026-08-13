@@ -8,6 +8,11 @@ type PrismaCommentPayload = Prisma.PostCommentGetPayload<{
         followers: true,
       }
     },
+    post: {
+      select: {
+        userId: true,
+      },
+    },
     attachments: true;
     postBookmarks: true;
     likes: true;
