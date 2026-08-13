@@ -1,0 +1,69 @@
+import { AnimatePresence, motion } from "motion/react";
+import { BreathingVisual } from "@/components /session/BreathingVisual";
+import { sessionTechs } from "@/data/sessionTechs";
+
+type BreathingSlideProps = {
+  onComplete: () => void,
+  onPhaseChange?: (
+    phase: "inhale" | "hold" | "exhale"
+  ) => void,
+
+  breathingStarted: boolean,
+  onStart: () => void,
+
+  phase: "inhale" | "hold" | "exhale",
+};
+
+const onboardingBreathingConfig = {
+  ...sessionTechs.box_4444,
+  cycles: 2,
+};
+
+export function BreathingSlide({
+  onComplete,
+  onPhaseChange,
+  onStart,
+  breathingStarted,
+  phase,
+}: BreathingSlideProps) {
+  return (
+    <div className="w-full h-full flex flex-col items-center justify-center mt-12 gap-14">
+      <BreathingVisual
+        config={onboardingBreathingConfig}
+        started={breathingStarted}
+        onStart={onStart}
+        onPhaseChange={onPhaseChange}
+        onComplete={onComplete}
+      />
+
+      <div className="h-6 flex items-center justify-center">
+        {!breathingStarted ? (
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="text-sm text-text-muted text-center"
+          >
+            Find a comfortable position, then press Start when you&apos;re ready.
+          </motion.p>
+        ) : (
+          <AnimatePresence mode="wait">
+            <motion.p
+              key={phase}
+              className="text-sm text-center"
+              initial={{ opacity: 0, y: 6 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -6 }}
+              transition={{ duration: 0.25 }}
+            >
+              {phase === "inhale" && "Let your belly expand gently."}
+
+              {phase === "hold" && "Hold softly, stay relaxed."}
+
+              {phase === "exhale" && "Now let your belly soften slowly."}
+            </motion.p>
+          </AnimatePresence>
+        )}
+      </div>
+    </div>
+  );
+}

@@ -1,0 +1,492 @@
+{
+  "common": {
+    "close": "Close",
+    "cancel": "Cancel",
+    "gotIt": "Got it",
+    "start": "Start",
+    "loading": {
+      "label": "[Loading..]",
+      "returning": "Bringing you back..",
+      "preparingNextStep": "Preparing the next step..",
+      "preparingSession": "Preparing your session..",
+      "deleting": {
+        "label": "[Deleting..]",
+        "deletingSession": "Deleting your session.."
+      },
+      "saving": {
+        "label": "[Saving..]",
+        "savingSession": "Saving your session.."
+      },
+      "gettingStarted": "Getting started..",
+      "posts": {
+        "title": "Loading..",
+        "message": "Loading your posts",
+        "errorTitle": "Unable to load your posts",
+        "errorMessage": "We couldn't load your posts right now. Please try again in a moment."
+      }
+    },
+    "statusDb": {
+      "saveSuccess": "Saved",
+      "saveError": "Something went wrong",
+      "savePending": "Saving.."
+    }
+  },
+  "home": {
+    "info": {
+      "modalTitle": "How it works",
+      "steps": {
+        "chooseMood": "Choose how you feel.",
+        "breathe": "Breathe slowly for a few minutes.",
+        "reflect": "Pause, reflect, or move on."
+      },
+      "message": "Actually there's no right way to use this!",
+      "content": "This space is here for the moments when things feel like too much — or when you just need a pause.",
+      "button": "Choose how you feel"
+    }
+  },
+  "session": {
+    "title": "How are you,",
+    "moodInitial": {
+      "stressed": "I am a little stressed",
+      "anxious": "I am overshelmed, very anxious",
+      "focus": "I just need some focus"
+    },
+    "moodInfo": {
+      "stressed": "Let's shake off some of that stress together. It'll only take a couple of minutes.",
+      "anxious": "No need to figure everything out right now. Just focus on the next breath.",
+      "focus": "Let's clear your head before you jump back in."
+    },
+    "steps": {
+      "step1": {
+        "label": "STEP 1/2",
+        "breathing444": {
+          "title": "BOX BREATHING (4-4-4-4)",
+          "subtitle": "For stress relief & relaxation",
+          "instruction": {
+            "message1": "Settle into a comfortable position. You can close your eyes or keep a soft gaze.",
+            "message2": "We'll move through a gentle breathing rhythm to help your body ease into a calmer state.",
+            "message3": "Take this at your own pace. Just follow along with the screen.",
+            "message4": "Let's slow things down."
+          },
+          "completed": {
+            "title": "Breathing complete!",
+            "subtitle": "Take a moment to notice how your body feels now.",
+            "continue": "Continue to Check-In",
+            "repeat": "Repeat breathing",
+            "finish": "Finish without saving"
+          }
+        },
+        "breathing478": {
+          "title": "BREATHING 4-7-8",
+          "subtitle": "For calming the nervous system",
+          "instruction": {
+            "message1": "If it feels okay, place one hand on your chest and one on your belly.",
+            "message2": "We’ll breathe slowly, with a longer exhale, inviting your body to feel a little safer.",
+            "message3": "If anything feels too intense, you’re free to pause or return to your natural breath.",
+            "message4": "You’re safe. We can breathe together."
+          },
+          "completed": {
+            "title": "Breathing complete!",
+            "subtitle": "Take a moment to notice how your body feels now.",
+            "continue": "Continue to Check-In",
+            "repeat": "Repeat breathing",
+            "finish": "Finish without saving"
+          }
+        },
+        "leave": {
+          "leaveLabel": "Leave session",
+          "continueLabel": "Continue breathing",
+          "modalTitle": "Leave session?",
+          "message1": "You’ve already started this session.",
+          "message2": "What would you like to do?"
+        }
+      },
+      "step2": {
+        "label": "STEP 2/2",
+        "title": "CHECK-IN",
+        "subtitle": "Short check-in",
+        "titleCheckIn": "How does it feel now?",
+        "subtitleCheckIn": "Take a moment to check in with yourself.",
+        "moodResult": {
+          "better": "Better",
+          "same": "About the same",
+          "tense": "Still tense",
+          "error": "Please select how you're feeling."
+        },
+        "notes": {
+          "label": "Notes (optional)",
+          "placeholder": "Write anything that feels important rigth now..",
+          "error": "Hey, you reached the 500 character limit."
+        },
+        "completed": {
+          "title": "You did enough for today",
+          "subtitle": "Take a moment to notice how your body feels now.",
+          "finish": "Finish",
+          "goMySpace": "Go to My Space"
+        },
+        "leave": {
+          "leaveLabel": "Leave for now",
+          "leaveLabelMobile": "Leave",
+          "continueLabel": "Continue check-in",
+          "modalTitle": "Leave check-in?",
+          "message1": "You’ve already completed the breathing step.",
+          "message2": "Your session is not saved yet."
+        }
+      }
+    },
+    "history": {
+      "title": "Session",
+      "summary": {
+        "felt": "How you felt",
+        "tech": "What you did",
+        "duration": "Time spent",
+        "time": {
+          "min": "min",
+          "sec": "sec"
+        }
+      },
+      "notes": "No notes for this session.",
+      "badges": {
+        "better": "Better",
+        "same": "About the same",
+        "stillStressed": "Still stressed",
+        "box4444": "Box 4-4-4-4",
+        "breathing478": "4-7-8"
+      },
+      "mood": {
+        "moodInitial": {
+          "stressed": "Stressed",
+          "anxious": "Very anxious",
+          "focus": "Neeed focus"
+        },
+        "moodResult": {
+          "better": "Better",
+          "same": "About the same",
+          "tense": "Still tense",
+          "blank": "Not checked in"
+        }
+      },
+      "repeat": {
+        "label": "Repeat breathing",
+        "modalTitle": "Start a new session",
+        "startNew": "Start new session",
+        "startNewMobile": "Start new",
+        "continueUnfinished": "Continue unfinished session",
+        "continueUnfinishedMobile": "Continue",
+        "message1": "You already have an unfinished session.",
+        "message2": "Starting a new one will delete your unfinished check-in."
+      },
+      "delete": {
+        "label": "Delete session",
+        "modalTitle": "Delete session?",
+        "message": "Your progress and notes from this session will be permanently deleted.",
+        "keep": "Keep session",
+        "keepMobile": "Keep",
+        "deleteMobile": "Delete",
+        "deleteSession": "Delete session"
+      },
+      "loading": {
+        "fail": "Failed to load session.",
+        "pending": "Loading session.."
+      },
+      "back": "My space"
+    },
+    "start": "Start session",
+    "ready": "I am ready",
+    "save": "Save session",
+    "phases": {
+      "inhale": "inhale",
+      "exhale": "exhale",
+      "hold": "hold"
+    },
+    "cycles": {
+      "one": "cycle left",
+      "few": "cycles left",
+      "many": "cycles left"
+    },
+    "resume": {
+      "message": "You have one unfinished session.",
+      "continue": "Continue",
+      "message1": "This will remove the session you started earlier.",
+      "message2": "Your breathing progress and unfinished check-in will be lost."
+    }
+  },
+  "mySpace": {
+    "tabs": {
+      "feed": "Feed",
+      "profile": "Profile",
+      "posts": "Posts",
+      "saved": "Saved",
+      "about": "About"
+    },
+    "menu": {
+      "mySpace": "My space",
+      "settings": {
+        "label": "Settings",
+        "title": "Settings",
+        "subtitle": "Make this space feel right for you.",
+        "info": {
+          "howWorks": {
+            "label": "How breathing works",
+            "modalTitle": "How breathing works"
+          },
+          "sources": {
+            "label": "Scientific sources",
+            "modalTitle": "Scientific sources"
+          },
+          "whenHelp": {
+            "label": "When to seek professional help",
+            "modalTitle": "When to seek professional help"
+          }
+        },
+        "preferences": {
+          "title": "Preferences",
+          "language": {
+            "label": "Language",
+            "modalTitle": "Select your preferred language",
+            "options": {
+              "en": {
+                "title": "English",
+                "content": "English"
+              },
+              "uk": {
+                "title": "Українська",
+                "content": "Ukrainian"
+              }
+            }
+          },
+          "mode": {
+            "label": "Mode",
+            "modalTitle": "Select your preferred mode",
+            "light": "Light",
+            "dark": "Dark",
+            "helper": "Choose the experience that fits you best. You can change your preferred mode anytime. Dark mode will be available soon!"
+          }
+        },
+        "support": {
+          "title": "Support & Safety",
+          "contact": {
+            "label": "Contact support",
+            "modalTitle": "Contact support"
+          },
+          "help": {
+            "label": "Get help now",
+            "modalTitle": "Get help now"
+          },
+          "privacy": {
+            "label": "Privacy & Data"
+          }
+        },
+        "medicalDisclaimer": "This app is not a medical tool.",
+        "logout": {
+          "label": "Log out",
+          "modalTitle": "Log out?",
+          "message": "You can sign back in anytime.",
+          "stay": "Stay logged in",
+          "stayMobile": "Stay in",
+          "logOut": "Log out"
+        }
+      },
+      "lastSessions": {
+        "label": "Last sessions",
+        "title": "Last sessions",
+        "subtitle": "A space to revisit the moments you took for yourself.",
+        "card": {
+          "viewAll": "View all sessions",
+          "blankTitle": "No sessions yet",
+          "blankSubtitle": "You haven't completed any sessions yet.",
+          "loadingTitle": "Loading sessions...",
+          "loadingSubtitle": "Getting your latest breathing history.",
+          "errorTitle": "Couldn't load sessions",
+          "errorSubtitle": "Please try again in a moment."
+        }
+      },
+      "explore": "Feed",
+      "logOut": "Log out",
+      "getHelp": "Get help now"
+    },
+    "edit": {
+      "button": "Edit",
+      "modalTitle": "Edit profile",
+      "displayNameInput": {
+        "label": "Display name",
+        "placeholder": "Create your display name"
+      },
+      "usernameInput": {
+        "label": "Username",
+        "placeholder": "Create your username"
+      },
+      "descriptionInput": {
+        "label": "Description",
+        "placeholder": "Create your description"
+      },
+      "bioInput": {
+        "label": "Bio",
+        "placeholder": "Create your bio"
+      },
+      "emailInput": {
+        "label": "Email"
+      },
+      "links": {
+        "label": "Links",
+        "modalTitle": "Add link",
+        "titleInput": "Title (optional)",
+        "addLink": {
+          "default": "Add link",
+          "pending": "Adding.."
+        },
+        "linkHint": "Share any of your portfolio, website, blog or social profiles."
+      },
+      "emailHint": "Email is managed by your sign-in provider."
+    },
+    "share": {
+      "button": "Share",
+      "modalTitle": "Share profile!",
+      "modalSubtitle": "Share profile with friends or copy the link to send it anywhere.",
+      "shareInput": "Share link",
+      "shareButton": "Or share to"
+    },
+    "follow": {
+      "followers": "followers",
+      "button": {
+        "follow": "Follow",
+        "following": "Following"
+      }
+    },
+    "posts": {
+      "postsCount": "posts",
+      "header": {
+        "label": "Post",
+        "followers_only": "Followers-only"
+      },
+      "tab": {
+        "label": "Posts",
+        "all": "All",
+        "allInfo": {
+          "title": "Info",
+          "content": "This is your complete post history. You can see both public and anonymous posts, but anonymous posts are hidden from everyone else and won't appear on your public profile."
+        },
+        "reflections": "Reflections",
+        "practices": "Practices",
+        "tips": "Tips"
+      },
+      "postCard": {
+        "time": "",
+        "author": "Author",
+        "tags": {
+          "reflection": "Reflection",
+          "practice": "Practice",
+          "tip": "Tip",
+          "timeRead": "min read",
+          "min": "min",
+          "h": "h",
+          "m": "m"
+        },
+        "more": "more",
+        "file": "Open file",
+        "followers_only": "Followers-only post",
+        "settings": {
+          "copy": "Copy link",
+          "save": "Save",
+          "unsave": "Unsave",
+          "delete": "Delete"
+        },
+        "replies": {
+          "label": "Replies",
+          "show": "Show replies",
+          "commentWarning": "Only followers can comment on this post.",
+          "replyWarning": "Only followers can reply to this post.",
+          "commentPlaceholder": "Write a comment..",
+          "replyPlaceholder": "Write a reply..",
+          "replyingTo": "Replying to",
+          "reply": "Reply",
+          "post": "Post",
+          "posting": "Posting.."
+        },
+        "follow": {
+          "follow": "Follow",
+          "following": "Following"
+        },
+        "share": {
+          "modalTitleComment": "Share this comment",
+          "modalTitlePost": "Share this post",
+          "message1": "Share",
+          "messageComment": "this comment",
+          "messagePost": "this post",
+          "message2": "across socials.",
+          "shareInputComment": "Share this comment link",
+          "shareInputPost": "Share this post link",
+          "shareButton": "Or share to"
+        }
+      },
+      "create": {
+        "modalTitle": "Create post",
+        "tabs": {
+          "reflection": "Reflection",
+          "practice": "Practice",
+          "tip": "Tip"
+        },
+        "titleInput": "Title (optional)",
+        "contentInput": {
+          "reflection": "What's on your mind?",
+          "practice": "What have you been practicing lately?",
+          "tip": "What would you recommend to others?"
+        },
+        "post": "Post",
+        "posting": "Posting..",
+        "category": {
+          "label": "Category",
+          "productivity": "Productivity",
+          "mindfulness": "Mindfulness",
+          "self-care": "Self-care",
+          "learning": "Learning",
+          "relationships": "Relationships",
+          "work": "Work",
+          "lifestyle": "Lifestyle"
+        },
+        "duration": {
+          "label": "Duration",
+          "min": "min",
+          "custom": "custom"
+        },
+        "postSettings": {
+          "label": "Post settings",
+          "modalTitle": "Post settings",
+          "view": "Who can view my post?",
+          "comment": "Who can comment?",
+          "postAs": "Post as",
+          "anyone": "Anyone",
+          "followers_only": "Followers only",
+          "public": "Public",
+          "anon": "Anonymously",
+          "postSettingsHint": "Control who can see your post, who can comment, and whether you share it publicly or anonymously."
+        },
+        "attachments": {
+          "mb": "MB",
+          "info": {
+            "title": "Add a file",
+            "message1": "Supported formats: PDF, DOC, DOCX, TXT.",
+            "message2": "Maximum size: 10 MB.",
+            "select": "Select a file"
+          }
+        }
+      }
+    },
+    "notifications": {
+      "label": "Notifications",
+      "liked": "liked your post.",
+      "replied": "replied to you.",
+      "followed": "followed you.",
+      "markAsRead": "Mark all as read"
+    },
+    "about": {
+      "aboutLabel": "About",
+      "addBio": "Add bio",
+      "linksLabel": "Links",
+      "addLink": "Add link",
+      "infoLabel": "More info",
+      "joined": "Joined"
+    }
+    
+  }
+}

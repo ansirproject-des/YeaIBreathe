@@ -1,65 +1,90 @@
+import { AnimatedStoryText } from "@/components /home/AnimatedStoryText"
+import { Header } from "@/components /layout/Header"
 import Image from "next/image";
+import { currentUser } from "@clerk/nextjs/server";
+import { redirect } from "next/navigation";
+import { EmailSignInForm } from "@/components /auth/EmailSignInForm";
 
-export default function Home() {
+
+export default async function WelcomePage() {
+  const user = await currentUser();
+
+  if (user) {
+    redirect("/home");
+  }
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
+    <div className="relative w-full h-screen flex flex-col items-center overflow-hidden">
+
+      <div className="absolute inset-0 -z-10">
         <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
+          src="/images/bg4.svg"
+          alt=""
+          fill
           priority
+          className="object-cover object-left sm:object-center"
         />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+      </div>
+      <div className="w-full shrink-0">
+        <Header
+          left={
+
+              <Image
+                src={"/logo.svg"}
+                alt="App Logo"
+                width={160}
+                height={160}
+                className="mx-4 mt-2"
+              />
+          }
+          className="justify-center"
+          innerClassName="w-full"
+        />
+      </div>
+
+      <main className="w-full flex-1 flex items-start lg:items-center justify-center overflow-y-auto px-5 hide-scrollbar">
+        <div className="h-fit w-full lg:w-fit mx-auto flex flex-col lg:flex-row bg-surface rounded-4xl lg:rounded-[36px] items-center justify-center p-3 pb-6 mt-4 lg:p-5 lg:pr-12 gap-12">
+          <div
+            className="
+            w-full
+            lg:w-140
+            rounded-3xl
+            lg:rounded-[30px]
+            bg-[linear-gradient(90deg,#8A98B7_0%,transparent_25%,transparent_75%,#CFCFCF_100%),linear-gradient(180deg,#C8C7C7_0%,#F2F1EF_15%,#F2F1EF_75%,#FFC8A3_100%)]
+            bg-size-[200%_200%,200%_200%]
+            animate-gradient
+            p-1
+            lg:px-1
+            lg:py-1
+            shrink-0
+          "
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+            <div
+              className="
+              min-h-80
+              lg:min-h-110
+              rounded-[20px]
+              lg:rounded-3xl
+              bg-surface
+              p-6
+              lg:p-9
+            "
+            >
+              <AnimatedStoryText />
+            </div>
+          </div>
+
+          <EmailSignInForm />
         </div>
       </main>
+
+      <footer className="w-full shrink-0 px-5 overflow-hidden">
+        <div className="w-full mx-auto mb-8 my-4 flex flex-col items-start">
+          <p className="text-sm text-primary">
+            That quiet space to pause, breathe, and reconnect with yourself.
+          </p>
+        </div>
+      </footer>
     </div>
   );
 }
