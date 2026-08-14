@@ -116,11 +116,10 @@ export function WelcomeModal({ userEmail, avatarUrl, clerkFirstName, initialDisp
             onChange={(e) => {
               const value = e.target.value;
               setDisplayName(value);
+              const errorKey = validateDisplayName(value);
+
               setDisplayNameError(
-                validateDisplayName(
-                  value,
-                  (key) => welcome(key)
-                ) ?? ""
+                errorKey ? welcome(errorKey) : ""
               );
             }}
             placeholder={welcome("displayNamePlaceholder")}

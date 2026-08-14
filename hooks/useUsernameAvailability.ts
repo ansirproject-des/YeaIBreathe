@@ -1,18 +1,19 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-
-import { validateUsername } from "@/lib/user/validation";
-import type { AvailabilityStatus, UsernameStatus, } from "@/app/types/username";
-import { checkUsernameAvailability } from "@/app/actions/user";
 import { useTranslations } from "next-intl";
 
+import { validateUsername } from "@/lib/user/validation";
+import type { UsernameStatus } from "@/app/types/username";
+import { checkUsernameAvailability } from "@/app/actions/user";
 
 export function useUsernameAvailability(
   username: string,
   savedUsername?: string,
 ) {
-  const [availability, setAvailability] = useState<AvailabilityStatus>("idle");
+  const [availability, setAvailability] =
+    useState<UsernameStatus>("idle");
+
   const [suggestions, setSuggestions] = useState<string[]>([]);
 
   const requestIdRef = useRef(0);
@@ -29,29 +30,32 @@ export function useUsernameAvailability(
     >
   >({});
 
-  const validationError = validateUsername(
-    username,
-    (key) => welcome(key)
-  );
+  const validationKey = validateUsername(username);
+
   const hasChanged =
     savedUsername === undefined
       ? true
       : username !== savedUsername;
-
 
   useEffect(() => {
     if (!hasChanged) {
       return;
     }
 
-    if (validationError) {
+    // Username is invalid locally.
+    // No API request is needed.
+    if (validationKey) {
       return;
     }
+
     const currentRequestId = ++requestIdRef.current;
+
     const cached = usernameCache.current[username];
 
     if (cached) {
-      setAvailability(cached.available ? "available" : "taken");
+      setAvailability(
+        cached.available ? "available" : "taken"
+      );
       setSuggestions(cached.suggestions);
       return;
     }
@@ -69,7 +73,9 @@ export function useUsernameAvailability(
       const wait = Math.max(0, 300 - elapsed);
 
       setTimeout(() => {
-        if (currentRequestId !== requestIdRef.current) return;
+        if (currentRequestId !== requestIdRef.current) {
+          return;
+        }
 
         usernameCache.current[username] = {
           available: result.available,
@@ -77,17 +83,22 @@ export function useUsernameAvailability(
         };
 
         setSuggestions(result.suggestions);
-        setAvailability(result.available ? "available" : "taken");
+
+        setAvailability(
+          result.available
+            ? "available"
+            : "taken"
+        );
       }, wait);
     }, 500);
 
     return () => clearTimeout(timeout);
-  }, [username, validationError, hasChanged]);
+  }, [username, validationKey, hasChanged]);
 
   const status: UsernameStatus =
     !hasChanged
       ? "idle"
-      : validationError
+      : validationKey
         ? "invalid"
         : availability;
 
@@ -99,7 +110,9 @@ export function useUsernameAvailability(
         : status === "taken"
           ? welcome("usernameTaken")
           : status === "invalid"
-            ? validationError ?? ""
+            ? validationKey
+              ? welcome(validationKey)
+              : ""
             : "";
 
   return {
