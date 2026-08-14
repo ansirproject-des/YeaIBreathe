@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import { validateUsername } from "@/lib/user/validation";
 import type { AvailabilityStatus, UsernameStatus, } from "@/app/types/username";
 import { checkUsernameAvailability } from "@/app/actions/user";
+import { useTranslations } from "next-intl";
 
 
 export function useUsernameAvailability(
@@ -16,6 +17,8 @@ export function useUsernameAvailability(
 
   const requestIdRef = useRef(0);
 
+  const welcome = useTranslations("welcome");
+
   const usernameCache = useRef<
     Record<
       string,
@@ -26,7 +29,10 @@ export function useUsernameAvailability(
     >
   >({});
 
-  const validationError = validateUsername(username);
+  const validationError = validateUsername(
+    username,
+    (key) => welcome(key)
+  );
   const hasChanged =
     savedUsername === undefined
       ? true
@@ -79,19 +85,19 @@ export function useUsernameAvailability(
   }, [username, validationError, hasChanged]);
 
   const status: UsernameStatus =
-  !hasChanged
-    ? "idle"
-    : validationError
-      ? "invalid"
-      : availability;
+    !hasChanged
+      ? "idle"
+      : validationError
+        ? "invalid"
+        : availability;
 
   const message =
     status === "checking"
-      ? "Checking availability..."
+      ? welcome("checking")
       : status === "available"
-        ? "Username is available."
+        ? welcome("availableUsername")
         : status === "taken"
-          ? "This username is already taken."
+          ? welcome("usernameTaken")
           : status === "invalid"
             ? validationError ?? ""
             : "";

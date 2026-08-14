@@ -11,6 +11,7 @@ import { useUsernameAvailability } from "@/hooks/useUsernameAvailability";
 import { UsernameSuggestions } from "./UsernameSuggestions";
 import { Spinner } from "../ui/Spinner";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 
 type WelcomeModalProps = {
   userEmail: string,
@@ -22,8 +23,11 @@ type WelcomeModalProps = {
 }
 
 export function WelcomeModal({ userEmail, avatarUrl, clerkFirstName, initialDisplayName, initialUsername }: WelcomeModalProps) {
+
   const [displayName, setDisplayName] = useState(initialDisplayName);
   const [username, setUsername] = useState(initialUsername);
+
+  const welcome = useTranslations("welcome");
 
   const [displayNameError, setDisplayNameError] = useState("");
 
@@ -99,8 +103,8 @@ export function WelcomeModal({ userEmail, avatarUrl, clerkFirstName, initialDisp
 
 
           <div className="w-full flex flex-col gap-2">
-            <h3 className="text-3xl text-text font-bold">Welcome, {clerkFirstName} </h3>
-            <p className="text-text">Let&apos;s make this space yours.</p>
+            <h3 className="text-3xl text-text font-bold">{welcome("title")} {clerkFirstName} </h3>
+            <p className="text-text">{welcome("subtitle")}</p>
           </div>
         </div>
 
@@ -112,10 +116,15 @@ export function WelcomeModal({ userEmail, avatarUrl, clerkFirstName, initialDisp
             onChange={(e) => {
               const value = e.target.value;
               setDisplayName(value);
-              setDisplayNameError(validateDisplayName(value) ?? "");
+              setDisplayNameError(
+                validateDisplayName(
+                  value,
+                  (key) => welcome(key)
+                ) ?? ""
+              );
             }}
-            placeholder="How people will see you"
-            label="Display name"
+            placeholder={welcome("displayNamePlaceholder")}
+            label={welcome("displayNameInput")}
 
             helperText={displayNameError}
             helperVariant={displayNameError ? "error" : "default"}
@@ -132,10 +141,10 @@ export function WelcomeModal({ userEmail, avatarUrl, clerkFirstName, initialDisp
                 const value = properUsername(e.target.value);
                 setUsername(value);
               }}
-              placeholder="username"
+              placeholder={welcome("usernameInputPlaceholder")}
 
               adornment="@"
-              label="Username"
+              label={welcome("usernameInput")}
 
               helperText={message}
               helperVariant={
@@ -158,7 +167,7 @@ export function WelcomeModal({ userEmail, avatarUrl, clerkFirstName, initialDisp
             )}
 
             <div className="w-full flex flex-col p-3 gap-0.5 rounded-xl bg-app-gray border border-app-gray-hover">
-              <p className="text-sm text-text-muted">Your profile link would be:</p>
+              <p className="text-sm text-text-muted">{welcome("profileLink")}</p>
               <p className="text-sm text-text">
                 breathe.app/@
                 {status === "taken" || status === "invalid"
@@ -176,7 +185,7 @@ export function WelcomeModal({ userEmail, avatarUrl, clerkFirstName, initialDisp
             className="w-full sm:w-fit"
             disabled={!canContinue || isSaving}
           >
-            {isSaving ? "Saving..." : "Continue"}
+            {isSaving ? welcome("saving") : welcome("continue")}
           </Button>
         </div>
       </div>

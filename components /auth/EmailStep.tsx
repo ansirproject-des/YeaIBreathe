@@ -1,5 +1,6 @@
 "use client"
 
+import { useTranslations } from "next-intl";
 import { Button } from "../ui/Button"
 import { Input } from "../ui/Input";
 
@@ -11,6 +12,8 @@ type EmailStepProps = {
 }
 
 export function EmailStep({ email, error, isSendingCode, onEmailChange }: EmailStepProps) {
+
+  const hero = useTranslations("hero");
   return (
     <>
       <Input
@@ -18,14 +21,14 @@ export function EmailStep({ email, error, isSendingCode, onEmailChange }: EmailS
         name="email"
         type="email"
         value={email}
-        label="Email"
+        label={hero("emailStep.label")}
         onChange={(e) => onEmailChange(e.target.value)}
         helperText={error}
         helperVariant={error ? "error" : "default"}
         helperIcon={
           error ? <div className="size-2 rounded-full bg-danger" /> : undefined
         }
-        placeholder="Enter your email"
+        placeholder={hero("emailStep.enterEmail")}
         className="w-full"
         autoFocus={false}
         autoComplete="email"
@@ -33,7 +36,7 @@ export function EmailStep({ email, error, isSendingCode, onEmailChange }: EmailS
 
 
       <Button type="submit" disabled={isSendingCode}>
-        {isSendingCode ? "Sending code..." : "Log in with email"}
+        {isSendingCode ? hero("emailStep.sending") : hero("emailStep.login")}
       </Button>
     </>
   )

@@ -1,20 +1,18 @@
 "use client";
 
-import { useEffect, useState } from "react";
-
-const lines = [
-  "Dear friend,",
-  "You might be functioning just fine on the outside.",
-  "Getting things done. Answering messages. Moving through the day.",
-  "And still feel overwhelmed, tense, or suddenly anxious inside.",
-  "This isn't another app asking you to do more.",
-  "It's about pausing — long enough for your body to remember it's safe.",
-  "I made this space for those moments.",
-  "To pause. To breathe. To feel a little more steady again.",
-  "You are safe here",
-];
+import { useEffect, useMemo, useState } from "react";
+import { useTranslations } from "next-intl";
 
 export function AnimatedStoryText() {
+  const hero = useTranslations("hero");
+
+  const lines = useMemo(
+    () => Array.from({ length: 9 }, (_, index) =>
+      hero(`story.lines.${index}`)
+    ),
+    [hero]
+  );
+
   const [currentLine, setCurrentLine] = useState(0);
   const [displayedText, setDisplayedText] = useState("");
   const [finishedLines, setFinishedLines] = useState<string[]>([]);
@@ -41,7 +39,7 @@ export function AnimatedStoryText() {
     }, 32);
 
     return () => clearInterval(typing);
-  }, [currentLine]);
+  }, [currentLine, lines]);
 
   const getClassName = (index: number) => {
     if (index === 0) {

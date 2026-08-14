@@ -1,6 +1,7 @@
 import { AnimatePresence, motion } from "motion/react";
 import { BreathingVisual } from "@/components /session/BreathingVisual";
 import { sessionTechs } from "@/data/sessionTechs";
+import { useTranslations } from "next-intl";
 
 type BreathingSlideProps = {
   onComplete: () => void,
@@ -26,6 +27,8 @@ export function BreathingSlide({
   breathingStarted,
   phase,
 }: BreathingSlideProps) {
+  const onboarding = useTranslations("onboarding");
+
   return (
     <div className="w-full h-full flex flex-col items-center justify-center mt-12 gap-14">
       <BreathingVisual
@@ -43,7 +46,7 @@ export function BreathingSlide({
             animate={{ opacity: 1 }}
             className="text-sm text-text-muted text-center"
           >
-            Find a comfortable position, then press Start when you&apos;re ready.
+            {onboarding("breathing.message")}
           </motion.p>
         ) : (
           <AnimatePresence mode="wait">
@@ -55,11 +58,11 @@ export function BreathingSlide({
               exit={{ opacity: 0, y: -6 }}
               transition={{ duration: 0.25 }}
             >
-              {phase === "inhale" && "Let your belly expand gently."}
+              {phase === "inhale" && onboarding("breathing.inhale")}
 
-              {phase === "hold" && "Hold softly, stay relaxed."}
+              {phase === "hold" && onboarding("breathing.hold")}
 
-              {phase === "exhale" && "Now let your belly soften slowly."}
+              {phase === "exhale" && onboarding("breathing.exhale")}
             </motion.p>
           </AnimatePresence>
         )}

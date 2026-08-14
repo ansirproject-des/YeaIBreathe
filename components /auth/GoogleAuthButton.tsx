@@ -1,9 +1,11 @@
+import { useTranslations } from "next-intl";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
 
 export function GoogleAuthButton() {
   const router = useRouter();
+  const hero = useTranslations("hero");
 
 
   return (
@@ -21,7 +23,7 @@ export function GoogleAuthButton() {
         >
 
         </Image>
-        Continue with Google
+        {hero("googleAuth")}
       </button>
   )
 }

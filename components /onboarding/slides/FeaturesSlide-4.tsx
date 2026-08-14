@@ -1,12 +1,16 @@
 import { motion } from "motion/react";
 import { AnimatedCheckBox } from "../assets/AnimatedCheckbox";
+import { useTranslations } from "next-intl";
 
 
 export function FeaturesSlide() {
+
+    const onboarding = useTranslations("onboarding");
+  
   return (
     <div className="w-full flex flex-col gap-6 mt-4 px-2 items-center">
       <p className="w-full text-2xl font-bold">
-        Here&apos;s what you&apos;ll find
+        {onboarding("features.title")}
       </p>
 
       <div className="w-full flex flex-col">
@@ -15,9 +19,9 @@ export function FeaturesSlide() {
 
           <div className="flex flex-col gap-0.5">
             <p className="flex-1">
-              Breathe with guidance.
+              {onboarding("features.checkbox1.title")}
             </p>
-            <p className="text-text-muted text-sm">Calm your nervous system.</p>
+            <p className="text-text-muted text-sm">{onboarding("features.checkbox1.subtitle")}</p>
           </div>
         </div>
 
@@ -26,9 +30,9 @@ export function FeaturesSlide() {
 
           <div className="flex flex-col gap-0.5">
             <p className="flex-1">
-              Reflect through journaling.
+              {onboarding("features.checkbox2.title")}
             </p>
-            <p className="text-text-muted text-sm">Understand yourself over time.</p>
+            <p className="text-text-muted text-sm">{onboarding("features.checkbox2.subtitle")}</p>
           </div>
         </div>
 
@@ -37,9 +41,9 @@ export function FeaturesSlide() {
 
           <div className="flex flex-col gap-0.5">
             <p className="flex-1">
-              Collect what helps you personally.
+             {onboarding("features.checkbox3.title")}
             </p>
-            <p className="text-text-muted text-sm">Build your own Calm Toolkit.</p>
+            <p className="text-text-muted text-sm">{onboarding("features.checkbox3.subtitle")}</p>
           </div>
         </div>
 
@@ -47,8 +51,7 @@ export function FeaturesSlide() {
           <AnimatedCheckBox delay={0.6} />
 
           <p className="flex-1">
-            Share what helps you.
-            Discover what helps others while staying private, anonymous, or public.
+            {onboarding("features.checkbox4.subtitle")}
           </p>
         </div>
 
@@ -63,7 +66,7 @@ export function FeaturesSlide() {
           }}
 
           className="flex py-3 text-sm text-text-descr px-4 mt-6 bg-app-gray border border-app-gray-hover rounded-xl">
-          *Privacy comes first. Share only what feels right. Everything else stays yours until you decide otherwise.</motion.div>
+          {onboarding("features.privacy")}</motion.div>
       </div>
     </div>
 

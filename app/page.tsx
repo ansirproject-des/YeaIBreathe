@@ -4,10 +4,12 @@ import Image from "next/image";
 import { currentUser } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import { EmailSignInForm } from "@/components /auth/EmailSignInForm";
+import { getTranslations } from "next-intl/server";
 
 
 export default async function WelcomePage() {
   const user = await currentUser();
+  const hero = await getTranslations("hero");
 
   if (user) {
     redirect("/home");
@@ -81,7 +83,7 @@ export default async function WelcomePage() {
       <footer className="w-full shrink-0 px-5 overflow-hidden">
         <div className="w-full mx-auto mb-8 my-4 flex flex-col items-start">
           <p className="text-sm text-primary">
-            That quiet space to pause, breathe, and reconnect with yourself.
+            {hero("message")}
           </p>
         </div>
       </footer>

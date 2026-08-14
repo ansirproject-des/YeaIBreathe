@@ -6,6 +6,7 @@ import { EmailStep } from "./EmailStep";
 import { VerifStep } from "./VerifStep";
 import { GoogleAuthButton } from "./GoogleAuthButton";
 import { ArrowLeft } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 interface ClerkAPIErrorItem {
   code?: string;
@@ -48,6 +49,8 @@ export function EmailSignInForm() {
   const [isSendingCode, setIsSendingCode] = useState(false);
   const [isVerifyingCode, setIsVerifyingCode] = useState(false);
 
+  const hero = useTranslations("hero");
+
   const [code, setCode] = useState("");
   const [step, setStep] = useState<"email" | "code">("email");
   const [secondsLeft, setSecondsLeft] = useState(30);
@@ -70,7 +73,7 @@ export function EmailSignInForm() {
     e.preventDefault();
 
     if (!email.trim()) {
-      setError("Please enter your email.");
+      setError(hero("error.enterEmail"));
       return;
     }
 
@@ -122,7 +125,7 @@ export function EmailSignInForm() {
 
   async function handleVerify() {
     if (!code.trim()) {
-      setError("Please enter the verification code.");
+      setError(hero("error.enterVerifCode"));
       return;
     }
 
@@ -201,15 +204,11 @@ export function EmailSignInForm() {
           return;
         }
 
-        window.location.href = "/home";
+        window.location.href = "/welcome";
         return;
       }
 
      if (signUp.status === "missing_requirements") {
-  console.log("SIGN UP STATUS:", signUp.status);
-  console.log("MISSING FIELDS:", signUp.missingFields);
-  console.log("UNVERIFIED FIELDS:", signUp.unverifiedFields);
-
   setError(
     `Missing: ${signUp.missingFields?.join(", ") || "unknown"}`
   );
@@ -240,9 +239,9 @@ export function EmailSignInForm() {
       {step === "email" ? (
         <div className="w-full lg:max-w-120 flex flex-col p-2 lg:p-3 gap-10">
           <div className="w-full flex flex-col gap-2">
-            <h2 className="text-3xl font-bold text-text">Welcome</h2>
+            <h2 className="text-3xl font-bold text-text">{hero("title")}</h2>
             <p className="max-w-100 text-base text-primary/70">
-              Enter your email to sign in or create an account.
+              {hero("subtitle")}
             </p>
           </div>
 
@@ -270,12 +269,12 @@ export function EmailSignInForm() {
             >
               <ArrowLeft className="w-7 h-7 group-hover:text-text-muted" />
               <h3 className="text-3xl font-bold text-text group-hover:text-text">
-                Verification
+                {hero("verifStep.title")}
               </h3>
             </button>
 
             <p className="max-w-100 text-base text-primary/70">
-              We&apos;ve sent a 6-digit code to{" "}
+              {hero("verifStep.subtitle")}{" "}
               <span className="text-text font-bold">{email}.</span>
             </p>
           </div>

@@ -2,28 +2,23 @@
 
 import { useEffect, useState } from "react";
 import { motion } from "motion/react";
+import { useTranslations } from "next-intl";
 
 const timeline = [
   {
     id: 1,
-    title: "Today",
-    descr: "You just started",
     progress: "22%",
     popoverBorder: "border border-app-gray",
     icon: "bg-primary h-4 w-4",
   },
   {
     id: 2,
-    title: "This week",
-    descr: "Feel calmer before difficult moments.",
     progress: "40%",
     popoverBorder: "border border-app-gray",
     icon: "bg-primary h-4 w-4",
   },
   {
     id: 3,
-    title: "This month",
-    descr: "Breathing becomes automatic !",
     progress: "52%",
     icon: "bg-[#90C5FF] w-11 h-11 blur-[4px] animate-hint-pulse",
     popoverBorder: "border border-app-gray",
@@ -31,8 +26,6 @@ const timeline = [
   },
   {
     id: 4,
-    title: "Over time",
-    descr: (<div className="flex flex-col"><span>A calmer nervous system.</span><span>Better focus.</span><span>More emotional resilience.</span></div>),
     progress: "86%",
     popoverBorder: "border border-app-gray",
     icon: "bg-primary h-4 w-4",
@@ -44,6 +37,8 @@ export function ReflectionSlide() {
     Record<number, { x: number; y: number }>
   >({});
   const [phase, setPhase] = useState(0);
+
+  const onboarding = useTranslations("onboarding");
 
   useEffect(() => {
     const timers = [
@@ -87,8 +82,8 @@ export function ReflectionSlide() {
   return (
     <div className="w-full flex flex-col gap-8 mt-1 items-center">
       <div className="w-full flex flex-col gap-2">
-        <p className="w-full text-2xl font-bold">That was only 24 seconds!</p>
-        <p className="text-text-descr">Your nervous system has already started responding.</p>
+        <p className="w-full text-2xl font-bold">{onboarding("reflection.title")}</p>
+        <p className="text-text-descr">{onboarding("reflection.subtitle")}</p>
       </div>
 
       <div className="relative w-full">
@@ -97,7 +92,7 @@ export function ReflectionSlide() {
           {timeline.map((item) => (
             <div key={item.id} className="flex flex-col gap-2">
               <p className="text-primary">
-                {item.title}
+                {onboarding(`reflection.timeline.${item.id}.title`)}
               </p>
 
               <div className="relative">
@@ -177,7 +172,17 @@ export function ReflectionSlide() {
                       >
                         <div className={`rounded-xl bg-surface/20 ${item.popoverBorder} px-3 py-2 backdrop-blur-sm`}>
                           <div className="text-[13px]">
-                            {item.descr}
+                            {item.id === 4 ? (
+                              <>
+                                {onboarding("reflection.timeline.4.descr.1")}
+                                <br />
+                                {onboarding("reflection.timeline.4.descr.2")}
+                                <br />
+                                {onboarding("reflection.timeline.4.descr.3")}
+                              </>
+                            ) : (
+                              onboarding(`reflection.timeline.${item.id}.desc`)
+                            )}
                           </div>
                         </div>
                       </div>

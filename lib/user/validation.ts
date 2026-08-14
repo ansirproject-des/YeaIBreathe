@@ -1,14 +1,16 @@
-export function validateDisplayName(value: string): string | null {
+export function validateDisplayName(
+  value: string,
+  t: (key: string) => string
+): string | null {
   const name = value.trim();
 
   if (name.length === 0) {
-    return "Display name is required."
+    return t("requiredDisplayName");
   }
 
   if (name.length > 30) {
-    return "Display name must be 30 characters or less."
+    return t("displayNameTooLong");
   }
-
 
   return null;
 }
@@ -21,29 +23,32 @@ export function properUsername(value: string): string {
     .replace(/[^a-z0-9._]/g, "");
 }
 
-export function validateUsername(value: string): string | null {
+export function validateUsername(
+  value: string,
+  t: (key: string) => string
+): string | null {
   if (value.length === 0) {
-    return "Username is required.";
+    return t("requiredUsername");
   }
 
   if (value.length < 3) {
-    return "Username must be at least 3 characters.";
+    return t("usernameTooShort");
   }
 
   if (value.length > 20) {
-    return "Username must be 20 characters or less.";
+    return t("usernameTooLong");
   }
 
   if (!/^[a-z0-9._]+$/.test(value)) {
-    return "Only lowercase letters, numbers, dots and underscores are allowed.";
+    return t("usernameInvalidCharacters");
   }
 
   if (value.startsWith(".") || value.startsWith("_")) {
-    return "Username can't start with a dot or underscore.";
+    return t("usernameInvalidStart");
   }
 
   if (value.endsWith(".") || value.endsWith("_")) {
-    return "Username can't end with a dot or underscore.";
+    return t("usernameInvalidEnd");
   }
 
   return null;

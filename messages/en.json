@@ -487,6 +487,137 @@
       "infoLabel": "More info",
       "joined": "Joined"
     }
-    
+  },
+  "onboarding": {
+    "intro": {
+      "welcome": "Welcome to YeaIBreathe",
+      "skip": "Skip for now",
+      "ok": "Ok, continue",
+      "message1": "We spend thousands of hours learning how to work.",
+      "message2": {
+        "1": "Almost none learning",
+        "2": "how to rest."
+      },
+      "message3": "Starting from this screen let's learn how to slow down."
+    },
+    "breathing": {
+      "message": "Find a comfortable position, then press Start when you're ready.",
+      "start": "Start",
+      "back": "Back",
+      "skip": "Skip breathing",
+      "inhale": "Let your belly expand gently.",
+      "hold": "Hold softly, stay relaxed.",
+      "exhale": "Now let your belly soften slowly."
+    },
+    "reflection": {
+      "title": "That was only 24 seconds!",
+      "subtitle": "Your nervous system has already started responding.",
+      "timeline": {
+        "1": {
+          "title": "Today",
+          "desc": "You just started"
+        },
+        "2": {
+          "title": "This week",
+          "desc": "Feel calmer before difficult moments."
+        },
+        "3": {
+          "title": "This month",
+          "desc": "Breathing becomes automatic!"
+        },
+        "4": {
+          "title": "Over time",
+          "descr": {
+            "1": "A calmer nervous system.",
+            "2": "Better focus.",
+            "3": "More emotional resilience."
+          }
+        }
+      },
+      "back": "Back",
+      "continue": "Continue"
+    },
+    "features": {
+      "title": "Here's what you'll find",
+      "checkbox1": {
+        "title": "Breathe with guidance.",
+        "subtitle": "Calm your nervous system."
+      },
+      "checkbox2": {
+        "title": "Reflect through journaling.",
+        "subtitle": "Understand yourself over time."
+      },
+      "checkbox3": {
+        "title": "Collect what helps you personally.",
+        "subtitle": "Build your own Calm Toolkit."
+      },
+      "checkbox4": {
+        "subtitle": "Share what helps you. Discover what helps others while staying private, anonymous, or public."
+      },
+      "privacy": "*Privacy comes first. Share only what feels right. Everything else stays yours until you decide otherwise.",
+      "back": "Back",
+      "getStarted": "Get started",
+      "saving": "Saving.."
+    }
+  },
+  "welcome": {
+    "title": "Welcome,",
+    "subtitle": "Let's make this space yours.",
+    "displayNameInput": "Display name",
+    "displayNamePlaceholder": "How people will see you",
+    "requiredDisplayName": "Display name is required.",
+    "usernameInput": "Username",
+    "usernameInputPlaceholder": "Username",
+    "usernameTaken": "This username is already taken.",
+    "availableUsername": "Username is available.",
+    "requiredUsername": "Username is required.",
+    "usernameInvalidEnd": "Username can't end with a dot or underscore.",
+    "usernameTooShort": "Username must be at least 3 characters.",
+    "checking": "Checking availability",
+    "profileLink": "Your profile link would be:",
+    "continue": "Continue",
+    "saving": "Saving..."
+  },
+  "hero": {
+    "message": "That quiet space to pause, breathe, and reconnect with yourself.",
+    "title": "Welcome",
+    "subtitle": "Enter your email to sign in or create an account.",
+    "error": {
+      "enterEmail": "Please enter your email.",
+      "enterVerifCode": "Please enter the verification code."
+    },
+    "verifStep": {
+      "title": "Verification",
+      "label": "Code",
+      "subtitle": "We've sent a 6-digit code to",
+      "sending": "Sending..",
+      "resendIn": {
+        "1": "Resend in",
+        "2": "s"
+      },
+      "resendCode": "Resend code",
+      "verifying": "Verifying code..",
+      "verify": "Verify"
+    },
+    "emailStep": {
+      "sending": "Sending code..",
+      "login": "Log in with email",
+      "label": "email",
+      "enterEmail": "Enter your email"
+    },
+    "googleAuth": "Continue with Google",
+    "story": {
+      "lines": {
+        "0": "Dear friend,",
+        "1": "You might be functioning just fine on the outside.",
+        "2": "Getting things done. Answering messages. Moving through the day.",
+        "3": "And still feel overwhelmed, tense, or suddenly anxious inside.",
+        "4": "This isn't another app asking you to do more.",
+        "5": "It's about pausing — long enough for your body to remember it's safe.",
+        "6": "I made this space for those moments.",
+        "7": "To pause. To breathe. To feel a little more steady again.",
+        "8": "You are safe here"
+      }
+    }
   }
 }

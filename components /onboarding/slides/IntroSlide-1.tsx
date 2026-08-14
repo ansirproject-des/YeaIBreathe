@@ -3,9 +3,13 @@ import { IntroCard } from "../assets/IntroCard";
 import Feet from "@/public/images/feet.png"
 import Drop from "@/public/images/drop.png"
 import Ba from "@/public/images/ba.png"
+import { useTranslations } from "next-intl";
 
 
 export function IntroSlide() {
+
+  const onboarding = useTranslations("onboarding");
+
   return (
     <div className="w-full flex flex-col gap-4 mt-4 items-center">
       <div className="relative w-full h-50 overflow-hidden">
@@ -91,18 +95,18 @@ className="absolute translate-x-6 translate-y-3 z-30"
 
       <div className="w-full flex flex-col gap-8">
         <div className="w-full flex flex-col gap-2">
-          <p className="w-full text-center text-2xl font-bold">Welcome to YeaIBreathe</p>
+          <p className="w-full text-center text-2xl font-bold">{onboarding("intro.welcome")}</p>
           <div className="w-full flex flex-col">
             <p className="w-full text-center text-text-descr">
-              We spend thousands of hours learning how to work.
+              {onboarding("intro.message1")}
             </p>
             <p className="w-full text-center text-text-descr">
-              Almost none learning <span className="text-text font-bold">how to rest.</span>
+             {onboarding("intro.message2.1")} <span className="text-text font-bold">{onboarding("intro.message2.2")}</span>
             </p>
           </div>
 
         </div>
-        <p className="w-full text-center text-text-descr">Starting from this screen let&apos;s learn how to slow down.</p>
+        <p className="w-full text-center text-text-descr">{onboarding("intro.message3")}</p>
       </div>
 
     </div>

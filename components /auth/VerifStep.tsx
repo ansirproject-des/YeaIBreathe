@@ -3,6 +3,7 @@
 import { RotateCcw } from "lucide-react";
 import { Button } from "../ui/Button"
 import { OtpInput } from "../ui/OtpInput";
+import { useTranslations } from "next-intl";
 
 type VerifStepProps = {
   code: string,
@@ -26,6 +27,8 @@ export function VerifStep({
   secondsLeft
 }: VerifStepProps) {
 
+  const hero = useTranslations("hero");
+
 
   return (
     <>
@@ -33,7 +36,7 @@ export function VerifStep({
 
         <OtpInput
           value={code}
-          label="Code"
+          label={hero("verifStep.label")}
           onChange={onCodeChange}
           onSubmit={onVerify}
           disabled={isVerifyingCode}
@@ -57,10 +60,15 @@ export function VerifStep({
         >
           <RotateCcw className="w-5 h-5" />
           {isSendingCode
-            ? "Sending..."
+            ? hero("verifStep.sending")
             : secondsLeft > 0
-              ? `Resend in ${secondsLeft}s`
-              : "Resend code"}
+              ? (
+                <>
+                  {hero("verifStep.resendIn.1")} {secondsLeft}
+                  {hero("verifStep.resendIn.2")}
+                </>
+              )
+              : hero("verifStep.resendCode")}
         </Button>
 
         <Button
@@ -68,7 +76,7 @@ export function VerifStep({
           onClick={onVerify}
           disabled={isVerifyingCode}
           className="w-full">
-          {isVerifyingCode ? "Verifying code.." : "Verify code"}
+          {isVerifyingCode ? hero("verifStep.verifying") : hero("verifStep.verify")}
         </Button>
       </div>
     </>

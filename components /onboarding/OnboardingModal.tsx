@@ -8,6 +8,7 @@ import { FeaturesSlide } from "./slides/FeaturesSlide-4";
 import { MoveLeft } from "lucide-react";
 import { CompleteOnboarding } from "@/app/actions/user";
 import { motion } from "motion/react";
+import { useTranslations } from "next-intl";
 
 type OnboardingModalProps = {
   onCompleted: () => void,
@@ -19,6 +20,8 @@ export function OnboardingModal({ onCompleted }: OnboardingModalProps) {
   const [breathingStarted, setBreathingStarted] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [breathingKey, setBreathingKey] = useState(0);
+
+  const onboarding = useTranslations("onboarding");
 
 
   const goToNextStep = useCallback(() => {
@@ -71,7 +74,7 @@ export function OnboardingModal({ onCompleted }: OnboardingModalProps) {
               onClick={onCompleted}
               size="smText"
               className="underline"
-            >Skip for now</Button>
+            >{onboarding("intro.skip")}</Button>
 
             <Button
               onClick={() => {
@@ -79,7 +82,7 @@ export function OnboardingModal({ onCompleted }: OnboardingModalProps) {
                 goToNextStep();
               }}
             >
-              Okay, continue
+             {onboarding("intro.ok")}
             </Button>
           </div>
         ),
@@ -110,7 +113,7 @@ export function OnboardingModal({ onCompleted }: OnboardingModalProps) {
               className="flex gap-1.5 shrink-0"
             >
               <MoveLeft className="w-4 h-4" />
-              Back
+              {onboarding("breathing.back")}
             </Button>
 
             <div className="flex-1">
@@ -125,7 +128,7 @@ export function OnboardingModal({ onCompleted }: OnboardingModalProps) {
                 goToNextStep();
               }}
             >
-              Skip breathing
+              {onboarding("breathing.skip")}
             </Button>
           </div>
         ),
@@ -143,11 +146,11 @@ export function OnboardingModal({ onCompleted }: OnboardingModalProps) {
               size="smText"
               className="flex gap-1.5" >
               <MoveLeft className="w-4 h-4" />
-              Back
+              {onboarding("reflection.back")}
             </Button>
 
             <Button onClick={goToNextStep} className="gap-1.5">
-              Continue<span className="text-text-muted">3/4</span>
+              {onboarding("reflection.continue")}<span className="text-text-muted">3/4</span>
             </Button>
           </div>
         ),
@@ -165,13 +168,13 @@ export function OnboardingModal({ onCompleted }: OnboardingModalProps) {
               size="smText"
               className="flex gap-1.5">
               <MoveLeft className="w-4 h-4" />
-              Back
+             {onboarding("features.back")}
             </Button>
             <Button
               onClick={handleGetStarted}
               disabled={isSaving}
             >
-              {isSaving ? "Saving..." : "Get started"}
+              {isSaving ?onboarding("features.saving") : onboarding("features.getStarted")}
             </Button>
           </div>
         ),
