@@ -7,6 +7,41 @@ import { VerifStep } from "./VerifStep";
 import { GoogleAuthButton } from "./GoogleAuthButton";
 import { ArrowLeft } from "lucide-react";
 
+interface ClerkAPIErrorItem {
+  code?: string;
+  message?: string;
+  longMessage?: string;
+}
+
+interface ClerkAPIErrorResponse {
+  errors: ClerkAPIErrorItem[];
+}
+
+function isClerkAPIError(err: unknown): err is ClerkAPIErrorResponse {
+  return (
+    typeof err === "object" &&
+    err !== null &&
+    "errors" in err &&
+    Array.isArray((err as Record<string, unknown>).errors)
+  );
+}
+
+function getClerkErrorMessage(err: unknown): string {
+  if (isClerkAPIError(err)) {
+    return (
+      err.errors[0]?.longMessage ??
+      err.errors[0]?.message ??
+      "An error occurred."
+    );
+  }
+
+  if (err instanceof Error) {
+    return err.message;
+  }
+
+  return "An unexpected error occurred.";
+}
+
 export function EmailSignInForm() {
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
@@ -31,7 +66,7 @@ export function EmailSignInForm() {
     return () => clearInterval(interval);
   }, [step, secondsLeft]);
 
-  async function handleSubmit(e: React.SubmitEvent) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
     if (!email.trim()) {
@@ -42,100 +77,104 @@ export function EmailSignInForm() {
     await handleSendCode();
   }
 
- async function handleSendCode() {
-  if (!signIn) {
-    setError("Authentication is not ready.");
-    return;
-  }
-
-  setError("");
-  setIsSendingCode(true);
-
-  try {
-    await signIn.create({
-      identifier: email.trim(),
-      signUpIfMissing: true,
-    });
-
-    console.log("Sign-in status after create:", signIn.status);
-    console.log("Sign-in object:", signIn);
-
-    const { error: sendError } = await signIn.emailCode.sendCode({
-      emailAddress: email.trim(),
-    });
-
-    if (sendError) {
-      console.error("Send code error:", sendError);
-      setError(sendError.longMessage ?? sendError.message);
+  async function handleSendCode() {
+    if (!signIn) {
+      setError("Authentication is not ready.");
       return;
     }
 
-    setStep("code");
-    setSecondsLeft(30);
+    setError("");
+    setIsSendingCode(true);
 
-    console.log("Code sent to:", email);
-  } catch (err) {
-    console.error("Could not send code:", err);
-    setError("Could not send code.");
-  } finally {
-    setIsSendingCode(false);
-  }
-}
+    const cleanEmail = email.trim();
 
-  async function handleVerify() {
-  if (!code.trim()) {
-    setError("Please enter the verification code.");
-    return;
-  }
+    try {
+   
+      const { error: createError } = await signIn.create({
+        identifier: cleanEmail,
+        signUpIfMissing: true,
+      });
 
-  if (!signIn) {
-    setError("Authentication is not ready.");
-    return;
-  }
-
-  setError("");
-  setIsVerifyingCode(true);
-
-  try {
-    const { error } = await signIn.emailCode.verifyCode({
-      code: code.trim(),
-    });
-
-    if (error) {
-      const errorCode = error.code;
-
-      console.error("Verification error:", error);
-
-      if (errorCode === "sign_up_if_missing_transfer") {
-        await handleSignUpTransfer();
+      if (createError) {
+        setError(getClerkErrorMessage(createError));
         return;
       }
 
-      setError(error.longMessage ?? error.message);
+
+      const { error: sendError } = await signIn.emailCode.sendCode();
+
+      if (sendError) {
+        setError(getClerkErrorMessage(sendError));
+        return;
+      }
+
+      setStep("code");
+      setSecondsLeft(30);
+      setCode("");
+    } catch (err: unknown) {
+
+      console.error("Could not send code:", err);
+      setError(getClerkErrorMessage(err));
+    } finally {
+      setIsSendingCode(false);
+    }
+  }
+
+  async function handleVerify() {
+    if (!code.trim()) {
+      setError("Please enter the verification code.");
       return;
     }
 
-    console.log("Sign-in status after verification:", signIn.status);
+    if (!signIn || !signUp) {
+      setError("Authentication is not ready.");
+      return;
+    }
 
-    if (signIn.status === "complete") {
-  console.log("✅ SIGN IN COMPLETE");
-  console.log("Sign-in status:", signIn.status);
+    setError("");
+    setIsVerifyingCode(true);
 
-  await signIn.finalize();
+    try {
 
-  window.location.href = "/home";
+      const { error: verifyError } = await signIn.emailCode.verifyCode({
+        code: code.trim(),
+      });
 
-  return;
-}
+      if (verifyError) {
 
-    console.log("Sign-in is not complete:", signIn.status);
-  } catch (err) {
-    console.error("Verification failed:", err);
-    setError("Verification failed.");
-  } finally {
-    setIsVerifyingCode(false);
+        if (
+          isClerkAPIError(verifyError) &&
+          verifyError.errors[0]?.code === "sign_up_if_missing_transfer"
+        ) {
+          await handleSignUpTransfer();
+          return;
+        }
+
+        setError(getClerkErrorMessage(verifyError));
+        return;
+      }
+
+
+      if (signIn.status === "complete") {
+        const { error: finalizeError } = await signIn.finalize();
+
+        if (finalizeError) {
+          setError(getClerkErrorMessage(finalizeError));
+          return;
+        }
+
+        window.location.href = "/home";
+        return;
+      }
+
+      setError("Sign-in could not be completed.");
+    } catch (err: unknown) {
+      console.error("Verification failed:", err);
+      setError(getClerkErrorMessage(err));
+    } finally {
+      setIsVerifyingCode(false);
+    }
   }
-}
 
   async function handleSignUpTransfer() {
     if (!signUp) {
@@ -144,40 +183,43 @@ export function EmailSignInForm() {
     }
 
     try {
-      const { error } = await signUp.create({
+
+      const { error: createError } = await signUp.create({
         transfer: true,
       });
 
-      if (error) {
-        console.error("Sign-up transfer error:", error);
-        setError(error.message);
+      if (createError) {
+        setError(getClerkErrorMessage(createError));
         return;
       }
 
       if (signUp.status === "complete") {
-        await signUp.finalize({
-          navigate: ({ decorateUrl }) => {
-            window.location.href = decorateUrl("/home");
-          },
-        });
+        const { error: finalizeError } = await signUp.finalize();
 
+        if (finalizeError) {
+          setError(getClerkErrorMessage(finalizeError));
+          return;
+        }
+
+        window.location.href = "/home";
         return;
       }
 
-      if (signUp.status === "missing_requirements") {
-        console.log(
-          "Missing sign-up requirements:",
-          signUp.missingFields
-        );
+     if (signUp.status === "missing_requirements") {
+  console.log("SIGN UP STATUS:", signUp.status);
+  console.log("MISSING FIELDS:", signUp.missingFields);
+  console.log("UNVERIFIED FIELDS:", signUp.unverifiedFields);
 
-        setError("Additional information is required.");
-        return;
-      }
+  setError(
+    `Missing: ${signUp.missingFields?.join(", ") || "unknown"}`
+  );
 
-      console.log("Unexpected sign-up status:", signUp.status);
-    } catch (err) {
+  return;
+}
+      setError("Could not complete account creation.");
+    } catch (err: unknown) {
       console.error("Could not create account:", err);
-      setError("Could not create your account.");
+      setError(getClerkErrorMessage(err));
     }
   }
 
@@ -188,78 +230,69 @@ export function EmailSignInForm() {
     setSecondsLeft(0);
     setIsSendingCode(false);
     setIsVerifyingCode(false);
+
+    signIn?.reset();
   }
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className="w-full">
       <div id="clerk-captcha" />
       {step === "email" ? (
-        <>
-          <div className="w-full lg:max-w-120 flex flex-col p-2 lg:p-3 gap-10">
-            <div className="w-full flex flex-col gap-2">
-              <h1 className="text-5xl font-bold text-text">
-                Welcome
-              </h1>
-
-              <p className="max-w-100 text-base text-primary/70">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                sed do eiusmod.
-              </p>
-            </div>
-
-            <div className="w-full flex flex-col gap-5">
-              <GoogleAuthButton />
-
-              <EmailStep
-                email={email}
-                error={error}
-                isSendingCode={isSendingCode}
-                onEmailChange={(value) => {
-                  setEmail(value);
-                  setError("");
-                }}
-              />
-            </div>
+        <div className="w-full lg:max-w-120 flex flex-col p-2 lg:p-3 gap-10">
+          <div className="w-full flex flex-col gap-2">
+            <h2 className="text-3xl font-bold text-text">Welcome</h2>
+            <p className="max-w-100 text-base text-primary/70">
+              Enter your email to sign in or create an account.
+            </p>
           </div>
-        </>
+
+          <div className="w-full flex flex-col gap-5">
+            <GoogleAuthButton />
+
+            <EmailStep
+              email={email}
+              error={error}
+              isSendingCode={isSendingCode}
+              onEmailChange={(value) => {
+                setEmail(value);
+                setError("");
+              }}
+            />
+          </div>
+        </div>
       ) : (
-        <>
-          <div className="w-full lg:max-w-120 flex flex-col p-2 lg:p-3 gap-10">
-            <div className="w-full flex flex-col gap-2">
-              <button
-                className="w-full flex items-center gap-1.5 group cursor-pointer"
-                type="button"
-                onClick={handleBack}
-              >
-                <ArrowLeft className="w-7 h-7 group-hover:text-text-muted" />
+        <div className="w-full lg:max-w-120 flex flex-col p-2 lg:p-3 gap-10">
+          <div className="w-full flex flex-col gap-2">
+            <button
+              className="w-full flex items-center gap-1.5 group cursor-pointer"
+              type="button"
+              onClick={handleBack}
+            >
+              <ArrowLeft className="w-7 h-7 group-hover:text-text-muted" />
+              <h3 className="text-3xl font-bold text-text group-hover:text-text">
+                Verification
+              </h3>
+            </button>
 
-                <h3 className="text-3xl font-bold text-text group-hover:text-text">
-                  Verification
-                </h3>
-              </button>
-
-              <p className="max-w-100 text-base text-primary/70">
-                We&apos;ve sent a 6-digit code to{" "}
-                <span className="text-text font-bold">
-                  {email}.
-                </span>
-              </p>
-            </div>
-
-            <div className="w-full flex flex-col gap-5">
-              <VerifStep
-                code={code}
-                error={error}
-                isSendingCode={isSendingCode}
-                isVerifyingCode={isVerifyingCode}
-                onCodeChange={setCode}
-                onVerify={handleVerify}
-                onResend={handleSendCode}
-                secondsLeft={secondsLeft}
-              />
-            </div>
+            <p className="max-w-100 text-base text-primary/70">
+              We&apos;ve sent a 6-digit code to{" "}
+              <span className="text-text font-bold">{email}.</span>
+            </p>
           </div>
-        </>
+
+          <div className="w-full flex flex-col gap-5">
+            <VerifStep
+              code={code}
+              error={error}
+              isSendingCode={isSendingCode}
+              isVerifyingCode={isVerifyingCode}
+              onCodeChange={setCode}
+              onVerify={handleVerify}
+              onResend={handleSendCode}
+              secondsLeft={secondsLeft}
+            />
+          </div>
+        </div>
       )}
     </form>
   );
