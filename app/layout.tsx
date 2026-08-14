@@ -7,6 +7,7 @@ import { ReactQueryProvider } from "@/components /providers/ReactQueryProvider";
 
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
+import { Analytics } from '@vercel/analytics/next';
 
 
 const nothingYCD = localFont({
@@ -63,6 +64,7 @@ export default async function RootLayout({
               {children}
             </ReactQueryProvider>
           </NextIntlClientProvider>
+          <Analytics />
         </body>
       </html>
     </ClerkProvider>
