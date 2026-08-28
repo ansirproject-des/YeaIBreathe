@@ -48,7 +48,7 @@
     "title": "How are you,",
     "moodInitial": {
       "stressed": "I am a little stressed",
-      "anxious": "I am overshelmed, very anxious",
+      "anxious": "I am overwhelmed, very anxious",
       "focus": "I just need some focus"
     },
     "moodInfo": {
