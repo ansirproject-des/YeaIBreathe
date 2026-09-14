@@ -9,4 +9,8 @@ jobs:
     steps:
       - uses: actions/checkout@v5
 
-      - run: echo "Hello from GitHub Actions!"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - run: npm ci
